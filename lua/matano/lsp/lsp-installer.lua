@@ -16,6 +16,7 @@ local servers = {
   "yamlls",
   "eslint",
   "graphql",
+  "gopls",
 }
 
 local settings = {
