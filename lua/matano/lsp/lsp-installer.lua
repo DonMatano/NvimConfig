@@ -13,6 +13,7 @@ local servers = {
   "sumneko_lua",
   "tsserver",
   "volar",
+  "tailwindcss",
   "yamlls",
   "eslint",
   "graphql",
