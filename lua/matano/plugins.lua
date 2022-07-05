@@ -36,6 +36,9 @@ packer.init {
       return require("packer.util").float { border = "rounded" }
     end,
   },
+  git = {
+    clone_timeout = 180, -- Timeout, in seconds, for git clones
+  }
 }
 
 -- Install your plugins here
@@ -43,54 +46,46 @@ return packer.startup(function(use)
   -- My plugins here
   use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" }  -- Have packer manage itself
   use { "nvim-lua/plenary.nvim", commit = "968a4b9afec0c633bc369662e78f8c5db0eba249" } -- Useful lua functions used ny lots of plugins
-  use { "windwp/nvim-autopairs", commit = "4a95b3982be7397cd8e1370d1a09503f9b002dbf" } -- Autopairs, integrates with both cmp and treesitter
-  use { "numToStr/Comment.nvim", commit = "2c26a00f32b190390b664e56e32fd5347613b9e2"}
   use { "kyazdani42/nvim-web-devicons", commit = "8d2c5337f0a2d0a17de8e751876eeb192b32310e"}
-  use { "kyazdani42/nvim-tree.lua", commit = "79258f1d670277016523e13c0a88daa25070879f"}
-  use { "akinsho/bufferline.nvim", commit = "68839d62785edfb4ff7a7b3c1e9f4b64d55749e8"}
-  use { "nvim-lualine/lualine.nvim", commit =  "5113cdb32f9d9588a2b56de6d1df6e33b06a554a"}
-  use { "ahmedkhalf/project.nvim", commit = "541115e762764bc44d7d3bf501b6e367842d3d4f"}
-  use { "lewis6991/impatient.nvim", commit = "969f2c5c90457612c09cf2a13fee1adaa986d350"}
-  use { "antoinemadec/FixCursorHold.nvim", commit = "1bfb32e7ba1344925ad815cb0d7f901dbc0ff7c1" } -- This is needed to fix lsp doc highlight
-  use { "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" } -- This is needed to fix lsp doc highlight
+  use { "kyazdani42/nvim-tree.lua", commit = "ec09b80c7bbf8a34c82b6de5f0a67ff78cbc8ae0"}
+  use { "windwp/nvim-autopairs", commit = "4a95b3982be7397cd8e1370d1a09503f9b002dbf"}
+  use { "nvim-lualine/lualine.nvim", commit = "5113cdb32f9d9588a2b56de6d1df6e33b06a554a"}
+  use { "numToStr/Comment.nvim", commit = "4086630ce2aaf76b2652516ee3169f0b558f6be1"}
+  use 'wakatime/vim-wakatime'
 
   -- Colorschemes
   use "folke/tokyonight.nvim"
-
-  -- cmp plugins
-  use { "hrsh7th/nvim-cmp", commit = "1cad1815e165c2b436f41a1ee20327701842a761" } -- The completion plugin
-  use { "hrsh7th/cmp-buffer" , commit = "62fc67a2b0205136bc3e312664624ba2ab4a9323" } -- buffer completions
-  use { "hrsh7th/cmp-path", commit = "466b6b8270f7ba89abd59f402c73f63c7331ff6e" } -- path completions
-  use { "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" } -- snippet completions
-  use { "hrsh7th/cmp-nvim-lsp", commit = "affe808a5c56b71630f17aa7c38e15c59fd648a8" }
-  use { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" }
-
-  -- snippets
-  use { "L3MON4D3/LuaSnip", commit = "a12441e0598e93e67235eba67c8e6fbffc896f06" } --snippet engine
-  use { "rafamadriz/friendly-snippets", commit = "d27a83a363e61009278b6598703a763ce9c8e617" } -- a bunch of snippets to use
-
-  -- LSP
-  use { "neovim/nvim-lspconfig", commit = "9278dfbb92f8e99c313ce58ddcff92bd0bce5c0c" } -- enable LSP
-  use { "williamboman/nvim-lsp-installer", commit = "5904749c2b7fb9d70967a9dc3599107e3d07c6d1" } -- simple to use language server installer
-  use { "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" } -- for formatters and linters
-  use { "RRethy/vim-illuminate", commit = "c82e6d04f27a41d7fdcad9be0bce5bb59fcb78e5" }
-
+  use 'folke/lsp-colors.nvim'
 
   -- Telescope
-  use { "nvim-telescope/telescope.nvim", commit = "d88b44ddf14670cffa9fdb1eaca7a0429a973653" }
+  use { 'nvim-telescope/telescope.nvim', commit = "1aa74b231c6f93152c4ac51549a0563dca9b4453" }
 
   -- Treesitter
   use {
     "nvim-treesitter/nvim-treesitter",
-    commit = "3cd45c302a108ef4c26b01285e178426cd7e0589",
+    commit = "78931d8bf15468d8f11f0c7910d470e88493b36b",
     run = ":TSUpdate",
   }
-  use { "p00f/nvim-ts-rainbow", commit = "837167f63445821c55e6eed9dbdac1b0b29afa92" }
-  -- use {'christianchiarulli/nvim-ts-rainbow'}
-  use { "windwp/nvim-ts-autotag", commit = "044a05c4c51051326900a53ba98fddacd15fea22" }
+
+  -- LSP 
+  use { "neovim/nvim-lspconfig", commit = "83dceed599b1236de4c18e31db3e0a0878b6fb59" }
+  use { "williamboman/nvim-lsp-installer", commit = "c13ea61d85e2170af35c06b47bcba143cf2f244b" }
+
+  -- CMP
+  use { "hrsh7th/nvim-cmp", commit = "9897465a7663997b7b42372164ffc3635321a2fe" }
+  use { "hrsh7th/cmp-buffer", commit = "62fc67a2b0205136bc3e312664624ba2ab4a9323" }
+  use { "hrsh7th/cmp-path", commit = "981baf9525257ac3269e1b6701e376d6fbff6921" }
+  use { "L3MON4D3/LuaSnip", commit = "295cc9e422060b3200234b42cbee6dde1dfee765" }
+  use { "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" }
+  use { "hrsh7th/cmp-nvim-lsp", commit = "affe808a5c56b71630f17aa7c38e15c59fd648a8" }
+  use { "rafamadriz/friendly-snippets", commit = "688691050074f39e6ec987321738494e08ba562e" }
 
   -- Git
-  use { "lewis6991/gitsigns.nvim", commit = "4883988cf8b623f63cc8c7d3f11b18b7e81f06ff" }
+  use { 'tpope/vim-fugitive', commit = "f809dde0e719f89a6fb5cb80f3be65f5cbc1d1fe" }
+  use { 'lewis6991/gitsigns.nvim', commit = "4883988cf8b623f63cc8c7d3f11b18b7e81f06ff" }
+
+  -- Debugger
+  use { "folke/trouble.nvim", commit = "da61737d860ddc12f78e638152834487eabf0ee5" }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
