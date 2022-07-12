@@ -67,6 +67,10 @@ return packer.startup(function(use)
     run = ":TSUpdate",
   }
 
+  -- Null ls --
+  use { 'jose-elias-alvarez/null-ls.nvim', commit = "fbb1929b29beff82e0fc495670f00ef4b3bcbcd3" }
+
+
   -- LSP 
   use { "neovim/nvim-lspconfig", commit = "83dceed599b1236de4c18e31db3e0a0878b6fb59" }
   use { "williamboman/nvim-lsp-installer", commit = "c13ea61d85e2170af35c06b47bcba143cf2f244b" }
