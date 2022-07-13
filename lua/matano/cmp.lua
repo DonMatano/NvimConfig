@@ -1,4 +1,5 @@
 local cmp = require'cmp'
+local lspkind = require'lspkind'
 
   cmp.setup({
     snippet = {
@@ -21,13 +22,37 @@ local cmp = require'cmp'
       ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'luasnip' }, -- For luasnip users.
+      { name = 'nvim_lsp', keyword_length = 2, max_item_count= 3 },
+      { name = 'luasnip', keyword_length = 3, max_item_count= 3 }, -- For luasnip users.
       -- { name = 'ultisnips' }, -- For ultisnips users.
       -- { name = 'snippy' }, -- For snippy users.
     }, {
-      { name = 'buffer' },
+      { name = 'buffer', keyword_length = 3, max_item_count= 3 },
+    }),
+    formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', -- show only symbol annotations
+      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+      menu= {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[api]",
+        path = "[path]",
+        luasnip = "[snip]",
+      }
+
+      -- The function below will be called before any actual modifications from lspkind
+      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+      -- before = function (entry, vim_item)
+      --   ...
+      --   return vim_item
+      -- end
     })
+  },
+  experimental = {
+    native_menu = false,
+    ghost_text = true,
+  }
   })
 
   -- Setup lspconfig.
@@ -50,5 +75,11 @@ local cmp = require'cmp'
     }
   }
   require('lspconfig')['sumneko_lua'].setup {
+    capabilities = capabilities
+  }
+  require('lspconfig')['vuels'].setup {
+    capabilities = capabilities
+  }
+  require('lspconfig')['cssls'].setup {
     capabilities = capabilities
   }

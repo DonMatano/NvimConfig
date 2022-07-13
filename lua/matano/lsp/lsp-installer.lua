@@ -6,7 +6,8 @@ end
 local servers = {
     "sumneko_lua",
     "gopls",
-    "volar",
+    -- "volar",
+    "vuels",
     "tsserver",
     "eslint",
     "cssls",
@@ -64,6 +65,11 @@ for _, server in pairs(servers) do
   if server == "sumneko_lua" then
     local sumneko_opts = require "matano.lsp.settings.sumneko_lua"
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
+  end
+
+  if server == "volar" then
+    local volar_opts = require "matano.lsp.settings.volar"
+    opts = vim.tbl_deep_extend("force", volar_opts, opts)
   end
 
   lspconfig[server].setup(opts)
