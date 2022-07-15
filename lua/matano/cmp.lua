@@ -22,8 +22,8 @@ local lspkind = require'lspkind'
       ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     sources = cmp.config.sources({
-      { name = 'nvim_lsp', keyword_length = 2, max_item_count= 3 },
-      { name = 'luasnip', keyword_length = 3, max_item_count= 3 }, -- For luasnip users.
+      { name = 'nvim_lsp', keyword_length = 2 },
+      { name = 'luasnip', keyword_length = 3, max_item_count= 5 }, -- For luasnip users.
       -- { name = 'ultisnips' }, -- For ultisnips users.
       -- { name = 'snippy' }, -- For snippy users.
     }, {

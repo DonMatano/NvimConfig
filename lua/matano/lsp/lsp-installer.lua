@@ -17,6 +17,7 @@ local servers = {
     "jsonls",
     "graphql",
     "yamlls",
+    "prismals",
 }
 
 local settings = {
